@@ -49,7 +49,6 @@ export async function CliqApiRequest(
 	try {
 		const responseData = await this.helpers.httpRequestWithAuthentication?.call(this, 'zohoCliqOAuth2Api', options);
 		if (responseData === undefined) return [];
-		console.log('Response Data:', responseData);
 
 		throwOnErrorStatus.call(this, responseData as IDataObject);
 
@@ -60,7 +59,6 @@ export async function CliqApiRequest(
 		}
 			: undefined;
 
-			console.log('Response Data:', error.context?.data);
 
 		throw new NodeApiError(this.getNode(), error as JsonObject, args);
 	}
