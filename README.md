@@ -1,46 +1,104 @@
-# n8n-nodes-zohocliq
+![Banner image](./cliq_n8n_banner.png)
 
-This is an n8n community node. It lets you use _app/service name_ in your n8n workflows.
+# 🚀 Zoho Cliq Integration with n8n  
 
-_App/service name_ is _one or two sentences describing the service this node integrates with_.
+Zoho Cliq is a powerful team communication and collaboration tool that simplifies workplace conversations, automates workflows, and helps teams stay connected.  
+The **n8n integration with Zoho Cliq** enables you to automate actions such as sending messages, managing channels, and creating threads — allowing seamless communication between your business tools.
 
-[n8n](https://n8n.io/) is a [fair-code licensed](https://docs.n8n.io/sustainable-use-license/) workflow automation platform.
+🔗 **Learn more:**  
+- [n8n Homepage](https://n8n.io/)  
+- [Zoho Cliq Homepage](https://www.zoho.com/cliq/)  
+- [Zoho Cliq Rest API](https://www.zoho.com/cliq/help/restapi/v2/)
 
-[Installation](#installation)
-[Operations](#operations)
-[Credentials](#credentials)
-[Compatibility](#compatibility)
-[Usage](#usage)
-[Resources](#resources)
-[Version history](#version-history)
+---
 
-## Installation
+## 🧩 Pre-requisites  
 
-Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes/installation/) in the n8n community nodes documentation.
+Before you start, ensure you have:  
+- A valid **n8n admin login account** → [https://app.n8n.cloud/login](https://app.n8n.cloud/login)  
+- An active **Zoho Cliq account**  
 
-## Operations
+---
 
-_List the operations supported by your node._
+## ⚙️ Installation  
 
-## Credentials
+You can install the Zoho Cliq community node in n8n using [npm](https://www.npmjs.com/):  
 
-_If users need to authenticate with the app/service, provide details here. You should include prerequisites (such as signing up with the service), available authentication methods, and how to set them up._
+**Package name:** `n8n-nodes-zohocliq`  
 
-## Compatibility
+**To install:**  
+1. Log in to your **n8n** account.  
+2. Navigate to **More options → Settings → Community Nodes → Install.**  
+3. Enter the package name `n8n-nodes-zohocliq`.  
+4. Click **Install** to add it to your workspace.  
 
-_State the minimum n8n version, as well as which versions you test against. You can also include any known version incompatibility issues._
+---
 
-## Usage
+## 🔐 Configuration  
 
-_This is an optional section. Use it to help users with any difficult or confusing aspects of the node._
+Follow these steps to connect your Zoho Cliq account with n8n:  
 
-_By the time users are looking for community nodes, they probably already know n8n basics. But if you expect new users, you can link to the [Try it out](https://docs.n8n.io/try-it-out/) documentation to help them get started._
+1. Log in to your **n8n** account.  
+2. Navigate to **Credentials → Add Credential → Zoho Cliq OAuth2 API → Continue.**  
+3. Copy the **Authorized Redirect URL** shown in n8n.  
+4. Visit the [Zoho Developer Console](https://api-console.zoho.com/) and create a new client:  
+   - Click **Add Client** → choose **Server-based Applications**.  
+   - Enter a **Client Name**, your **Homepage URL**, and paste the **Authorized Redirect URL**.  
+5. Click **Create** to generate your **Client ID** and **Client Secret**.  
+6. Go back to n8n → enter these credentials → click **Connect my account**.  
+7. Once connected, you can start building workflows using Zoho Cliq actions and triggers.  
 
-## Resources
+---
 
-* [n8n community nodes documentation](https://docs.n8n.io/integrations/#community-nodes)
-* _Link to app/service documentation._
+## ⚡ Supported Actions  
 
-## Version history
+| Category | Action | Description |
+|-----------|---------|-------------|
+| **Messages** | Post message to channel | Send a message to a specific channel |
+|  | Post message to channel as bot | Send a message to a channel as a bot |
+|  | Post message to chat | Send a message to a one-on-one or group chat |
+|  | Post message to user chat | Send a direct message to a user | 
+|  | Pin message | Pin a message in a channel |
+| **Threads** | Create a thread | Create a new thread inside a channel |
+|  | Update thread state | Close or reopen a thread |
+| **Channels** | Add bot to channel | Add your bot to a specific channel |
+|  | Archive channel | Archive a channel |
+|  | Create channel | Create a new channel |
+|  | Delete channel | Delete an existing channel |
+|  | Fetch channel | Retrieve details of a specific channel |
+|  | Unarchive channel | Restore an archived channel |
+|  | Update channel | Modify the details of a channel |
+|  | Add channel members | Add users to a channel |
+|  | Remove channel members | Remove a user from a channel |
+| **Users** | Retrieve user data | Get details of a specific user |
+|  | Add user status | Add a custom status for a user |
+|  | Set user status | Update or modify a user’s status |
+| **Teams** | Fetch team | Retrieve information about a team |
 
-_This is another optional section. If your node has multiple versions, include a short description of available versions and what changed, as well as any compatibility impact._
+---
+
+## 🧠 Example Workflow  
+
+1. Click **Create Workflow → Add First Step → Search “Zoho Cliq.”**  
+2. Choose a Zoho Cliq node (e.g., *Post Message to Channel*).  
+3. Configure inputs such as **channel ID**, **message content**, or **bot ID**.  
+4. Connect subsequent nodes from other apps to trigger actions dynamically.  
+5. Click **Test Workflow** to validate your setup.  
+
+---
+
+## 🧰 Troubleshooting  
+
+If you face any issues while configuring or running your Zoho Cliq workflows in n8n, please contact:  
+📧 **[support@zohocliq.com](mailto:support@zohocliq.com)**  
+
+---
+
+## 📝 Description  
+
+This document explains how to integrate **Zoho Cliq** with **n8n**, enabling automation of collaboration and communication tasks.  
+You can automate posting messages, managing channels, updating threads, and syncing statuses between your favorite tools using n8n’s visual workflow builder.  
+
+🔗 More info: [https://www.zoho.com/cliq/](https://www.zoho.com/cliq/)  
+
+---
