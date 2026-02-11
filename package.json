@@ -1,6 +1,6 @@
 {
     "name": "n8n-nodes-zohocliq",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "This is an n8n community node. It lets you use Zoho Cliq in your n8n workflows",
     "license": "MIT",
     "homepage": "",
