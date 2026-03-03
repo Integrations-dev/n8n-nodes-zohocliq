@@ -1,17 +1,17 @@
 {
-	"node": "n8n-nodes-zohocliqtest",
+	"node": "n8n-nodes-zohocliq.zohoCliq",
 	"nodeVersion": "1.0",
 	"codexVersion": "1.0",
 	"categories": ["Development", "Developer Tools"],
 	"resources": {
 		"credentialDocumentation": [
 			{
-				"url": ""
+				"url": "https://www.zoho.com/cliq/help/platform/n8n-integration-zoho-cliq.html"
 			}
 		],
 		"primaryDocumentation": [
 			{
-				"url": ""
+				"url": "https://www.zoho.com/cliq/help/restapi/v2/"
 			}
 		]
 	}
