@@ -29,13 +29,20 @@ export async function CliqApiRequest(
 ) {
 	const credentials = await this.getCredentials('zohoCliqOAuth2Api');
 	const oauthTokenData = credentials.oauthTokenData as IDataObject;
-	const apiDomainUrl = oauthTokenData?.api_domain ? new URL(oauthTokenData.api_domain as string).hostname.replace('www.', '') : 'zoho.com';
+	let apiDomainUrl = 'zoho.com';
+	if (oauthTokenData?.api_domain) {
+		try {
+			apiDomainUrl = new URL(oauthTokenData.api_domain as string).hostname.replace('www.', '');
+		} catch {
+			// Fall back to default domain if api_domain is not a valid URL
+		}
+	}
 	const options: IHttpRequestOptions = {
 		headers: { "user-agent": "n8n zohocliq" },
 		body,
 		method,
 		qs,
-		url: `https://cliq.${getDomain(apiDomainUrl)}/${endpoint}`,
+		url: `https://cliq.${getDomain(apiDomainUrl) ?? 'zoho.com'}/${endpoint}`,
 		json: true,
 	};
 	if (!Object.keys(body).length) {
