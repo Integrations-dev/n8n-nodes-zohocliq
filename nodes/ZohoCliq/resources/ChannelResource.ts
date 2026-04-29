@@ -21,6 +21,12 @@ export const channelOperations: INodeProperties[] = [
                 description: 'Add a bot to a channel',
             },
             {
+                name: `Add Channel Members`,
+                value: 'addUsersToChannel',
+                action: `Add channel members`,
+                description: 'Add users to a channel',
+            },
+            {
                 name: 'Archive Channel',
                 value: 'archiveChannel',
                 action: 'Archive channel',
@@ -45,6 +51,12 @@ export const channelOperations: INodeProperties[] = [
                 description: 'Fetch details of a specific channel',
             },
             {
+                name: 'Remove Channel Members',
+                value: 'removeChannelMember',
+                action: 'Remove channel member',
+                description: 'Remove a member from a channel',
+            },
+            {
                 name: 'Unarchive Channel',
                 value: 'unarchiveChannel',
                 action: 'Unarchive channel',
@@ -55,20 +67,7 @@ export const channelOperations: INodeProperties[] = [
                 value: 'updateChannel',
                 action: 'Update channel',
                 description: 'Update details of a specific channel',
-            },
-            {
-                name: `Add channel members`,
-                value: 'addUsersToChannel',
-                action: `Add channel members`,
-                description: 'Add users to a channel',
-            },
-            {
-                name: 'Remove Channel Members',
-                value: 'removeChannelMember',
-                action: 'Remove channel member',
-                description: 'Remove a member from a channel',
-            },
-            
+            }
         ],
         default: 'createChannel',
     },
