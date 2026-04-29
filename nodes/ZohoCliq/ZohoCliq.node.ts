@@ -46,20 +46,20 @@ export class ZohoCliq implements INodeType {
                 noDataExpression: true,
                 options: [
                     {
-                        name: 'Message',
-                        value: 'Message',
-                    },
-                    {
-                        name: 'User',
-                        value: 'Users',
-                    },
-                    {
                         name: 'Channel',
                         value: 'Channel',
                     },
                     {
+                        name: 'Message',
+                        value: 'Message',
+                    },
+                    {
                         name: 'Team',
                         value: 'Team'
+                    },
+                    {
+                        name: 'User',
+                        value: 'Users',
                     }
                 ],
                 default: 'Message',
