@@ -16,16 +16,16 @@ export const userOperations: INodeProperties[] = [
         },
         options: [
             {
-                name: 'Retrieve User Data',
-                value: 'retrieveUser',
-                action: 'Retrieve user data',
-                description: 'Retrieve details of a specific user',
-            },
-            {
                 name: 'Add User Status',
                 value: 'addUserStatus',
                 action: 'Add user status',
                 description: 'Add status for a user',
+            },
+            {
+                name: 'Retrieve User Data',
+                value: 'retrieveUser',
+                action: 'Retrieve user data',
+                description: 'Retrieve details of a specific user',
             },
             {
                 name: "Set User Status",
