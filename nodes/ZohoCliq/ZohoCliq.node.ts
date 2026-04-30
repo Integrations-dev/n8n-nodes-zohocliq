@@ -1,4 +1,4 @@
-import { INodeType, INodeTypeDescription, NodeConnectionType, ILoadOptionsFunctions, IDataObject, IExecuteFunctions, NodeOperationError } from 'n8n-workflow';
+import { INodeType, INodeTypeDescription, NodeConnectionTypes , ILoadOptionsFunctions, IDataObject, IExecuteFunctions, NodeOperationError } from 'n8n-workflow';
 
 import {
     CliqApiRequest,
@@ -29,8 +29,8 @@ export class ZohoCliq implements INodeType {
         defaults: {
             name: 'Zoho Cliq',
         },
-        inputs: ['main'] as NodeConnectionType[],
-        outputs: ['main'] as NodeConnectionType[],
+        inputs: [ NodeConnectionTypes.Main ],
+        outputs: [ NodeConnectionTypes.Main ],
         credentials: [
             {
                 name: 'zohoCliqOAuth2Api',
