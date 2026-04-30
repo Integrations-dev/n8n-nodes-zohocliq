@@ -40,41 +40,6 @@ export const userOperations: INodeProperties[] = [
 
 export const userFields: INodeProperties[] = [
     {
-        displayName: 'Channel',
-        name: 'channel',
-        type: 'options',
-        noDataExpression: true,
-        placeholder: "Select a channel",
-        required: true,
-        displayOptions: {
-            show: {
-                resource: ["Users"],
-                operation: ['Channel', 'ChannelAsBot', 'Thread', "addUsersToChannel", 'removeChannelMember', 'archiveChannel', 'deleteChannel', 'fetchChannel', 'unarchiveChannel', 'updateChannel'],
-            },
-        },
-        options: [], // Placeholder for dynamically fetched channels
-        default: '',
-        typeOptions: {
-            loadOptionsMethod: 'getChannels',
-        },
-    },
-    {
-        displayName: 'Channel ID',
-        name: 'customChannelId',
-        required: true,
-        placeholder: "Enter the channel ID",
-        type: 'string',
-        displayOptions: {
-            show: {
-                channel: ['Custom_Channel_Selected'],
-                resource: ["Users"],
-                operation: ['Channel', "ChannelAsBot", "Thread", 'addUsersToChannel', 'removeChannelMember', 'archiveChannel', 'deleteChannel', 'fetchChannel', 'unarchiveChannel', 'updateChannel'],
-            },
-        },
-        default: '',
-    },
-
-    {
         displayName: "Email ID/ ZUID",
         name: 'emailIDorZUID',
         type: 'string',
