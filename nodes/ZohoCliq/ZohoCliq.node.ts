@@ -590,11 +590,11 @@ export class ZohoCliq implements INodeType {
                         throw new NodeOperationError(this.getNode(), 'You must select a channel or provide a channel ID.');
                     }
 
-                    const body: IDataObject = {
-                        name: channelName,
-                        description: channelDescription,
-                        level: level,
-                    };
+                    const body: IDataObject = {};
+                    
+                    if(channelName.length > 0) body.name = channelName;
+                    if(channelDescription.length > 0) body.description = channelDescription;
+                    if(level.length > 0) body.level = level;
 
                     if (level === 'team') {
                         if (teams.length === 0) {
