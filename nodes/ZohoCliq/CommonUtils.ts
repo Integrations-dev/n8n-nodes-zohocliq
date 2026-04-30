@@ -30,12 +30,16 @@ export async function CliqApiRequest(
 	const credentials = await this.getCredentials('zohoCliqOAuth2Api');
 	const oauthTokenData = credentials.oauthTokenData as IDataObject;
 	const apiDomainUrl = oauthTokenData?.api_domain ? new URL(oauthTokenData.api_domain as string).hostname.replace('www.', '') : 'zoho.com';
+	const apiDomain = getDomain(apiDomainUrl);
+	if (!apiDomain) {
+		throw new NodeOperationError(this.getNode(), 'This Data Center is not supported in n8n yet!');
+	}
 	const options: IHttpRequestOptions = {
 		headers: { "user-agent": "n8n zohocliq" },
 		body,
 		method,
 		qs,
-		url: `https://cliq.${getDomain(apiDomainUrl)}/${endpoint}`,
+		url: `https://cliq.${apiDomain}/${endpoint}`,
 		json: true,
 	};
 	if (!Object.keys(body).length) {
