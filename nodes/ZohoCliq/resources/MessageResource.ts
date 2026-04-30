@@ -33,28 +33,28 @@ export const messageOperations: INodeProperties[] = [
                 description: 'Send message to a chat',
             },
             {
-                name: 'Direct Message',
-                value: 'DM',
-                action: 'Post message to user chat',
-                description: 'Send message to a user chat',
-            },
-            {
                 name: 'Create a Thread',
                 value: 'Thread',
                 action: 'Create a thread',
                 description: 'Create a thread in a channel',
             },
             {
-                name: 'Update Thread State',
-                value: 'updateThreadState',
-                action: 'Update thread state',
-                description: 'Update the state of a thread (close/ reopen)',
+                name: 'Direct Message',
+                value: 'DM',
+                action: 'Post message to user chat',
+                description: 'Send message to a user chat',
             },
             {
                 name: 'Pin Message',
                 value: 'pinMessage',
                 action: 'Pin message',
                 description: 'Pin a message in a channel',
+            },
+            {
+                name: 'Update Thread State',
+                value: 'updateThreadState',
+                action: 'Update thread state',
+                description: 'Update the state of a thread (close/ reopen)',
             }
         ],
         default: 'Channel',
