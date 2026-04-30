@@ -248,7 +248,7 @@ export const channelFields: INodeProperties[] = [
         displayOptions: {
             show: {
                 resource: ['Channel'],
-                operation: ['createChannel', 'updateChannel'],
+                operation: ['createChannel'],
                 level: ['private', 'external', 'organization'],
             },
         },
@@ -261,7 +261,7 @@ export const channelFields: INodeProperties[] = [
         type: 'boolean',
         displayOptions: {
             show: {
-                level: ['organization', 'team'], // This ensures the field is shown only when "level" is "organization"
+                level: ['organization', 'team'], // This ensures the field is shown only when "level" is "organization" or "team"
             },
         },
         default: false,
