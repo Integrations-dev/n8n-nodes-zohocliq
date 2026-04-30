@@ -201,22 +201,22 @@ export const channelFields: INodeProperties[] = [
             {
                 name: 'Organization',
                 value: 'organization',
-                description: 'Anyone in your organization can access and join this channel.',
+                description: 'Anyone in your organization can access and join this channel'
             },
             {
                 name: 'Team',
                 value: 'team',
-                description: 'Only selected members of your organization group can access and join this channel.',
+                description: 'Only selected members of your organization group can access and join this channel'
             },
             {
                 name: 'Personal',
                 value: 'private',
-                description: 'Only invited users from your organization can join this channel.',
+                description: 'Only invited users from your organization can join this channel'
             },
             {
                 name: 'External',
                 value: 'external',
-                description: 'Invited users from any organization can join this channel.',
+                description: 'Invited users from any organization can join this channel'
             }
         ],
         default: 'private',
