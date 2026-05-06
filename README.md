@@ -54,26 +54,26 @@ Follow these steps to connect your Zoho Cliq account with n8n:
 
 | Category | Action | Description |
 |-----------|---------|-------------|
+| **Channels** | Add bot to channel | Add your bot to a specific channel |
+|  | Add channel members | Add users to a channel |
+|  | Archive channel | Archive a channel |
+|  | Create channel | Create a new channel |
+|  | Delete channel | Delete an existing channel |
+|  | Fetch channel | Retrieve details of a specific channel |
+|  | Remove channel members | Remove a user from a channel |
+|  | Unarchive channel | Restore an archived channel |
+|  | Update channel | Modify the details of a channel |
 | **Messages** | Post message to channel | Send a message to a specific channel |
 |  | Post message to channel as bot | Send a message to a channel as a bot |
 |  | Post message to chat | Send a message to a one-on-one or group chat |
 |  | Post message to user chat | Send a direct message to a user | 
 |  | Pin message | Pin a message in a channel |
+| **Teams** | Fetch team | Retrieve information about a team |
 | **Threads** | Create a thread | Create a new thread inside a channel |
 |  | Update thread state | Close or reopen a thread |
-| **Channels** | Add bot to channel | Add your bot to a specific channel |
-|  | Archive channel | Archive a channel |
-|  | Create channel | Create a new channel |
-|  | Delete channel | Delete an existing channel |
-|  | Fetch channel | Retrieve details of a specific channel |
-|  | Unarchive channel | Restore an archived channel |
-|  | Update channel | Modify the details of a channel |
-|  | Add channel members | Add users to a channel |
-|  | Remove channel members | Remove a user from a channel |
-| **Users** | Retrieve user data | Get details of a specific user |
-|  | Add user status | Add a custom status for a user |
+| **Users** | Add user status | Add a custom status for a user |
+|  | Retrieve user data | Get details of a specific user |
 |  | Set user status | Update or modify a user’s status |
-| **Teams** | Fetch team | Retrieve information about a team |
 
 ---
 
