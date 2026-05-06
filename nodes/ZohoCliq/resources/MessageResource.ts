@@ -33,12 +33,6 @@ export const messageOperations: INodeProperties[] = [
                 description: 'Send message to a chat',
             },
             {
-                name: 'Create a Thread',
-                value: 'Thread',
-                action: 'Create a thread',
-                description: 'Create a thread in a channel',
-            },
-            {
                 name: 'Direct Message',
                 value: 'DM',
                 action: 'Post message to user chat',
@@ -49,12 +43,6 @@ export const messageOperations: INodeProperties[] = [
                 value: 'pinMessage',
                 action: 'Pin message',
                 description: 'Pin a message in a channel',
-            },
-            {
-                name: 'Update Thread State',
-                value: 'updateThreadState',
-                action: 'Update thread state',
-                description: 'Update the state of a thread (close/ reopen)',
             }
         ],
         default: 'Channel',
@@ -72,7 +60,7 @@ export const messageFields: INodeProperties[] = [
         displayOptions: {
             show: {
                 resource: ['Message'],
-                operation: ['Channel', 'ChannelAsBot', 'Thread', "addUsersToChannel", 'removeChannelMember', 'archiveChannel', 'deleteChannel', 'fetchChannel', 'unarchiveChannel', 'updateChannel'],
+                operation: ['Channel', 'ChannelAsBot', "addUsersToChannel", 'removeChannelMember', 'archiveChannel', 'deleteChannel', 'fetchChannel', 'unarchiveChannel', 'updateChannel'],
             },
         },
         options: [], // Placeholder for dynamically fetched channels
@@ -90,7 +78,7 @@ export const messageFields: INodeProperties[] = [
         displayOptions: {
             show: {
                 resource: ['Message'],
-                operation: ['Channel', "ChannelAsBot", "Thread", 'addUsersToChannel', 'removeChannelMember', 'archiveChannel', 'deleteChannel', 'fetchChannel', 'unarchiveChannel', 'updateChannel'],
+                operation: ['Channel', "ChannelAsBot", 'addUsersToChannel', 'removeChannelMember', 'archiveChannel', 'deleteChannel', 'fetchChannel', 'unarchiveChannel', 'updateChannel'],
                 channel: ["Custom_Channel_Selected"]
             },
         },

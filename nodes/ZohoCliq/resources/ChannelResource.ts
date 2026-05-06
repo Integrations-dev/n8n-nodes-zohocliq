@@ -84,7 +84,7 @@ export const channelFields: INodeProperties[] = [
         displayOptions: {
             show: {
                 resource: ["Channel"],
-                operation: ['Channel', 'ChannelAsBot', 'Thread', "addUsersToChannel", 'removeChannelMember', 'archiveChannel', 'deleteChannel', 'fetchChannel', 'unarchiveChannel', 'updateChannel'],
+                operation: ['Channel', 'ChannelAsBot', "addUsersToChannel", 'removeChannelMember', 'archiveChannel', 'deleteChannel', 'fetchChannel', 'unarchiveChannel', 'updateChannel'],
             },
         },
         options: [], // Placeholder for dynamically fetched channels
@@ -152,7 +152,7 @@ export const channelFields: INodeProperties[] = [
             show: {
                 channel: ['Custom_Channel_Selected'],
                 resource: ["Channel"],
-                operation: ['Channel', "ChannelAsBot", "Thread", 'addUsersToChannel', 'removeChannelMember', 'archiveChannel', 'deleteChannel', 'fetchChannel', 'unarchiveChannel', 'updateChannel'],
+                operation: ['Channel', "ChannelAsBot", 'addUsersToChannel', 'removeChannelMember', 'archiveChannel', 'deleteChannel', 'fetchChannel', 'unarchiveChannel', 'updateChannel'],
             },
         },
         default: '',

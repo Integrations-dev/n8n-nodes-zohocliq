@@ -15,6 +15,7 @@ import { messageFields, messageOperations } from './resources/MessageResource';
 import { userFields, userOperations } from './resources/UsersResource';
 import { channelFields, channelOperations } from './resources/ChannelResource';
 import { teamFields, teamOperations } from './resources/TeamResource';
+import { threadFields, threadOperations } from './resources/ThreadResource';
 
 
 export class ZohoCliq implements INodeType {
@@ -58,6 +59,10 @@ export class ZohoCliq implements INodeType {
                         value: 'Team'
                     },
                     {
+                        name: 'Thread',
+                        value: 'Thread',
+                    },
+                    {
                         name: 'User',
                         value: 'Users',
                     }
@@ -65,19 +70,20 @@ export class ZohoCliq implements INodeType {
                 default: 'Message',
             },
 
-
+            ...channelOperations,
+            ...channelFields,
 
             ...messageOperations,
             ...messageFields,
 
-            ...userOperations,
-            ...userFields,
-
-            ...channelOperations,
-            ...channelFields,
-
             ...teamOperations,
             ...teamFields,
+
+            ...threadOperations,
+            ...threadFields,
+
+            ...userOperations,
+            ...userFields
         ],
         usableAsTool: true
     };
@@ -297,7 +303,7 @@ export class ZohoCliq implements INodeType {
                         json: responseData,
                         pairedItem: { item: i },
                     });
-                } else if (resource === 'Message' && operation === 'Thread') {
+                } else if (resource === 'Thread' && operation === 'Thread') {
                     const channel = this.getNodeParameter('channel', i, '') as string;
                     const customChannelId = this.getNodeParameter('customChannelId', i, '') as string;
                     const messageId = this.getNodeParameter('messageId', i) as string;
@@ -616,7 +622,7 @@ export class ZohoCliq implements INodeType {
                         json: responseData,
                         pairedItem: { item: i },
                     });
-                } else if (resource === 'Message' && operation === 'updateThreadState') {
+                } else if (resource === 'Thread' && operation === 'updateThreadState') {
                     const threadChatId = this.getNodeParameter('threadChatId', i, '') as string;
                     const state = this.getNodeParameter('state', i, '') as string;
                     const queryString: IDataObject = {};
