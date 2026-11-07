@@ -15,7 +15,7 @@ export const teamOperations: INodeProperties[] = [
         },
         options: [
             {
-                name: 'Fetch Team',
+                name: 'Fetch',
                 value: 'fetchTeam',
                 action: 'Fetch team',
                 description: 'Fetch details of a specific team',
@@ -28,7 +28,7 @@ export const teamOperations: INodeProperties[] = [
 
 export const teamFields: INodeProperties[] = [
     {
-        displayName: 'Team',
+        displayName: 'Team Name or ID',
         name: 'team',
         type: 'options',
         noDataExpression: true,
@@ -44,7 +44,7 @@ export const teamFields: INodeProperties[] = [
         typeOptions: {
             loadOptionsMethod: 'getTeams',
         },
-        description: 'Select the team to perform the action on',
+        description: 'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>',
         placeholder: "Select a team"
     },
     {

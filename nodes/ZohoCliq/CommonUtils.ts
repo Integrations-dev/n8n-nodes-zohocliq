@@ -68,6 +68,29 @@ export async function CliqApiRequest(
 	}
 }
 
+// Builds the message payload from the text and the "Additional Fields" collection
+export function buildMessageBody(text: string, additionalFields: IDataObject): IDataObject {
+	const body: IDataObject = {
+		text,
+		sync_message: additionalFields.sync ?? false,
+	};
+
+	const bot: IDataObject = {};
+	if (additionalFields.botName) bot.name = additionalFields.botName;
+	if (additionalFields.botIconURL) bot.image = additionalFields.botIconURL;
+	if (Object.keys(bot).length > 0) body.bot = bot;
+
+	if (additionalFields.cardTheme) {
+		const card: IDataObject = { theme: additionalFields.cardTheme };
+		if (additionalFields.cardTitle) card.title = additionalFields.cardTitle;
+		if (additionalFields.cardIconURL) card.icon = additionalFields.cardIconURL;
+		if (additionalFields.cardThumbnailURL) card.thumbnail = additionalFields.cardThumbnailURL;
+		body.card = card;
+	}
+
+	return body;
+}
+
 export function getDomain(domain: string): string | undefined {
 	const value: { [key: string]: string } = {
 		".com": "zoho.com",

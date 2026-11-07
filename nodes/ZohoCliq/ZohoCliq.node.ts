@@ -1,6 +1,7 @@
-import { INodeType, INodeTypeDescription, NodeConnectionTypes , ILoadOptionsFunctions, IDataObject, IExecuteFunctions, NodeOperationError } from 'n8n-workflow';
+import { INodeType, INodeTypeDescription, NodeConnectionTypes , ILoadOptionsFunctions, IDataObject, IExecuteFunctions, NodeApiError, NodeOperationError } from 'n8n-workflow';
 
 import {
+    buildMessageBody,
     CliqApiRequest,
     getTeamsList,
     getTeamsListWithoutCustom,
@@ -22,7 +23,7 @@ export class ZohoCliq implements INodeType {
     description: INodeTypeDescription = {
         displayName: 'Zoho Cliq',
         name: 'zohoCliq',
-        icon: 'file:cliq.svg',
+        icon: { light: 'file:cliq.svg', dark: 'file:cliq.dark.svg' },
         group: ['transform'],
         version: 1,
         subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
@@ -136,42 +137,10 @@ export class ZohoCliq implements INodeType {
                     const customChannelId = this.getNodeParameter('customChannelId', i, '') as string;
                     const text = this.getNodeParameter('text', i) as string;
                     const botUniqueName = this.getNodeParameter('botUniqueName', i, '') as string;
-                    const sync = this.getNodeParameter('sync', i, false) as boolean;
-
-                    const botName = this.getNodeParameter('botName', i, '') as string;
-                    const botIconURL = this.getNodeParameter('botIconURL', i, '') as string;
-                    const cardTheme = this.getNodeParameter('cardTheme', i, 'none') as string;
-                    const cardTitle = this.getNodeParameter('cardTitle', i, '') as string;
-                    const cardIconURL = this.getNodeParameter('cardIconURL', i, '') as string;
-                    const cardThumbnailURL = this.getNodeParameter('cardThumbnailURL', i, '') as string;
+                    const additionalFields = this.getNodeParameter('additionalFields', i, {}) as IDataObject;
 
                     const queryString: IDataObject = {};
-
-                    const botObject: IDataObject = {};
-                    const cardObject: IDataObject = {};
-
-                    if (botName) botObject.name = botName;
-
-
-                    if (botIconURL) botObject.image = botIconURL;
-
-
-                    if (cardTheme && cardTheme !== 'none') {
-                        cardObject.theme = cardTheme;
-
-                        if (cardTitle) cardObject.title = cardTitle;
-                        if (cardIconURL) cardObject.icon = cardIconURL;
-                        if (cardThumbnailURL) cardObject.thumbnail = cardThumbnailURL;
-                    }
-
-
-                    const body: IDataObject = {
-                        text,
-                        sync_message: sync,
-                    };
-
-                    if (Object.keys(botObject).length > 0) body.bot = botObject;
-                    if (Object.keys(cardObject).length > 0) body.card = cardObject;
+                    const body = buildMessageBody(text, additionalFields);
 
                     const channel_id = customChannelId || channel;
 
@@ -191,40 +160,9 @@ export class ZohoCliq implements INodeType {
                     const chat = this.getNodeParameter('chat', i, '') as string;
                     const customChatId = this.getNodeParameter('customChatId', i, '') as string;
                     const text = this.getNodeParameter('text', i) as string;
-                    const sync = this.getNodeParameter('sync', i, false) as boolean;
+                    const additionalFields = this.getNodeParameter('additionalFields', i, {}) as IDataObject;
 
-                    const botName = this.getNodeParameter('botName', i, '') as string;
-                    const botIconURL = this.getNodeParameter('botIconURL', i, '') as string;
-                    const cardTheme = this.getNodeParameter('cardTheme', i, 'none') as string;
-                    const cardTitle = this.getNodeParameter('cardTitle', i, '') as string;
-                    const cardIconURL = this.getNodeParameter('cardIconURL', i, '') as string;
-                    const cardThumbnailURL = this.getNodeParameter('cardThumbnailURL', i, '') as string;
-
-                    const botObject: IDataObject = {};
-                    const cardObject: IDataObject = {};
-
-                    if (botName) botObject.name = botName;
-
-
-                    if (botIconURL) botObject.image = botIconURL;
-
-
-                    if (cardTheme && cardTheme !== 'none') {
-                        cardObject.theme = cardTheme;
-
-                        if (cardTitle) cardObject.title = cardTitle;
-                        if (cardIconURL) cardObject.icon = cardIconURL;
-                        if (cardThumbnailURL) cardObject.thumbnail = cardThumbnailURL;
-                    }
-
-
-                    const body: IDataObject = {
-                        text,
-                        sync_message: sync,
-                    };
-
-                    if (Object.keys(botObject).length > 0) body.bot = botObject;
-                    if (Object.keys(cardObject).length > 0) body.card = cardObject;
+                    const body = buildMessageBody(text, additionalFields);
 
                     const chat_id = customChatId || chat;
 
@@ -241,40 +179,9 @@ export class ZohoCliq implements INodeType {
                     const user = this.getNodeParameter('user', i, '') as string;
                     const customEmailID = this.getNodeParameter('customUserId', i, '') as string;
                     const text = this.getNodeParameter('text', i) as string;
-                    const sync = this.getNodeParameter('sync', i, false) as boolean;
+                    const additionalFields = this.getNodeParameter('additionalFields', i, {}) as IDataObject;
 
-                    const botName = this.getNodeParameter('botName', i, '') as string;
-                    const botIconURL = this.getNodeParameter('botIconURL', i, '') as string;
-                    const cardTheme = this.getNodeParameter('cardTheme', i, 'none') as string;
-                    const cardTitle = this.getNodeParameter('cardTitle', i, '') as string;
-                    const cardIconURL = this.getNodeParameter('cardIconURL', i, '') as string;
-                    const cardThumbnailURL = this.getNodeParameter('cardThumbnailURL', i, '') as string;
-
-                    const botObject: IDataObject = {};
-                    const cardObject: IDataObject = {};
-
-                    if (botName) botObject.name = botName;
-
-
-                    if (botIconURL) botObject.image = botIconURL;
-
-
-                    if (cardTheme && cardTheme !== 'none') {
-                        cardObject.theme = cardTheme;
-
-                        if (cardTitle) cardObject.title = cardTitle;
-                        if (cardIconURL) cardObject.icon = cardIconURL;
-                        if (cardThumbnailURL) cardObject.thumbnail = cardThumbnailURL;
-                    }
-
-
-                    const body: IDataObject = {
-                        text,
-                        sync_message: sync,
-                    };
-
-                    if (Object.keys(botObject).length > 0) body.bot = botObject;
-                    if (Object.keys(cardObject).length > 0) body.card = cardObject;
+                    const body = buildMessageBody(text, additionalFields);
 
                     const email_Id = customEmailID || user;
                     if (!email_Id) {
@@ -307,48 +214,18 @@ export class ZohoCliq implements INodeType {
                     const channel = this.getNodeParameter('channel', i, '') as string;
                     const customChannelId = this.getNodeParameter('customChannelId', i, '') as string;
                     const messageId = this.getNodeParameter('messageId', i) as string;
-                    const threadTitle = this.getNodeParameter('threadTitle', i) as string;
-                    const postInParentChannel = this.getNodeParameter('postInChannel', i) as boolean;
                     const text = this.getNodeParameter('text', i) as string;
-                    const sync = this.getNodeParameter('sync', i, false) as boolean;
-
-                    const botName = this.getNodeParameter('botName', i, '') as string;
-                    const botIconURL = this.getNodeParameter('botIconURL', i, '') as string;
-                    const cardTheme = this.getNodeParameter('cardTheme', i, 'none') as string;
-                    const cardTitle = this.getNodeParameter('cardTitle', i, '') as string;
-                    const cardIconURL = this.getNodeParameter('cardIconURL', i, '') as string;
-                    const cardThumbnailURL = this.getNodeParameter('cardThumbnailURL', i, '') as string;
-
-                    const botObject: IDataObject = {};
-                    const cardObject: IDataObject = {};
-
-                    if (botName) botObject.name = botName;
-                    if (botIconURL) botObject.image = botIconURL;
-
-
-                    if (cardTheme && cardTheme !== 'none') {
-                        cardObject.theme = cardTheme;
-
-                        if (cardTitle) cardObject.title = cardTitle;
-                        if (cardIconURL) cardObject.icon = cardIconURL;
-                        if (cardThumbnailURL) cardObject.thumbnail = cardThumbnailURL;
-                    }
+                    const additionalFields = this.getNodeParameter('additionalFields', i, {}) as IDataObject;
 
                     const channel_id = customChannelId || channel;
                     if (!channel_id) {
                         throw new NodeOperationError(this.getNode(), 'You must select a channel or provide a channel ID.');
                     }
 
-                    const body: IDataObject = {
-                        thread_title: threadTitle,
-                        text: text,
-                        thread_message_id: messageId,
-                        post_in_parent: postInParentChannel,
-                        sync_message: sync,
-                    };
-
-                    if (Object.keys(botObject).length > 0) body.bot = botObject;
-                    if (Object.keys(cardObject).length > 0) body.card = cardObject;
+                    const body = buildMessageBody(text, additionalFields);
+                    body.thread_title = additionalFields.threadTitle ?? '';
+                    body.thread_message_id = messageId;
+                    body.post_in_parent = additionalFields.postInChannel ?? false;
 
                     const responseData = await CliqApiRequest.call(this, 'POST', `api/v2/channels/${channel_id}/message`, body);
                     returnData.push({
@@ -549,15 +426,14 @@ export class ZohoCliq implements INodeType {
                     });
                 } else if (resource === 'Channel' && operation === 'createChannel') {
                     const channelName = this.getNodeParameter('channelName', i, '') as string;
-                    const channelDescription = this.getNodeParameter('channelDescription', i, '') as string;
                     const level = this.getNodeParameter('level', i, '') as string;
                     const teams = this.getNodeParameter('teams', i, []) as string[];
-                    const channelEmailIDs = this.getNodeParameter('channelEmailIDs', i, '') as string;
-                    const visibility = this.getNodeParameter('visibility', i, false) as boolean;
+                    const additionalFields = this.getNodeParameter('additionalFields', i, {}) as IDataObject;
+                    const channelEmailIDs = (additionalFields.channelEmailIDs as string) ?? '';
 
                     const body: IDataObject = {
                         name: channelName,
-                        description: channelDescription,
+                        description: additionalFields.channelDescription ?? '',
                         level: level,
                     };
 
@@ -573,7 +449,7 @@ export class ZohoCliq implements INodeType {
                     }
 
                     if (['organization', 'team'].includes(level)) {
-                        body.invite_only = visibility;
+                        body.invite_only = additionalFields.visibility ?? false;
                     }
 
                     const responseData = await CliqApiRequest.call(this, 'POST', `api/v2/channels`, body);
@@ -584,23 +460,24 @@ export class ZohoCliq implements INodeType {
                 } else if (resource === 'Channel' && operation === 'updateChannel') {
                     const channel = this.getNodeParameter('channel', i, '') as string;
                     const customChannelId = this.getNodeParameter('customChannelId', i, '') as string;
-                    const channelName = this.getNodeParameter('channelName', i, '') as string;
-                    const channelDescription = this.getNodeParameter('channelDescription', i, '') as string;
-                    const level = this.getNodeParameter('level', i, '') as string;
-                    const teams = this.getNodeParameter('teams', i, []) as string[];
-                    const channelEmailIDs = this.getNodeParameter('channelEmailIDs', i, '') as string;
-                    const visibility = this.getNodeParameter('visibility', i, false) as boolean;
+                    const updateFields = this.getNodeParameter('updateFields', i, {}) as IDataObject;
+                    const level = (updateFields.level as string) ?? '';
+                    const teams = (updateFields.teams as string[]) ?? [];
                     const channel_id = customChannelId || channel;
 
                     if (!channel_id) {
                         throw new NodeOperationError(this.getNode(), 'You must select a channel or provide a channel ID.');
                     }
 
+                    if (Object.keys(updateFields).length === 0) {
+                        throw new NodeOperationError(this.getNode(), 'Add at least one field under Update Fields.');
+                    }
+
                     const body: IDataObject = {};
-                    
-                    if(channelName.length > 0) body.name = channelName;
-                    if(channelDescription.length > 0) body.description = channelDescription;
-                    if(level.length > 0) body.level = level;
+
+                    if (updateFields.channelName) body.name = updateFields.channelName;
+                    if (updateFields.channelDescription) body.description = updateFields.channelDescription;
+                    if (level) body.level = level;
 
                     if (level === 'team') {
                         if (teams.length === 0) {
@@ -609,12 +486,8 @@ export class ZohoCliq implements INodeType {
                         body.team_ids = teams;
                     }
 
-                    if (['private', 'external', 'organization'].includes(level) && channelEmailIDs) {
-                        body.email_ids = channelEmailIDs.split(',').map(email => email.trim());
-                    }
-
                     if (['organization', 'team'].includes(level)) {
-                        body.invite_only = visibility;
+                        body.invite_only = updateFields.visibility ?? false;
                     }
 
                     const responseData = await CliqApiRequest.call(this, 'PUT', `api/v2/channels/${channel_id}`, body);
@@ -644,7 +517,10 @@ export class ZohoCliq implements INodeType {
                     });
                     continue;
                 }
-                throw error;
+                const nodeError = error instanceof NodeApiError || error instanceof NodeOperationError
+                    ? error
+                    : new NodeOperationError(this.getNode(), error as Error, { itemIndex: i });
+                throw nodeError;
             }
         }
 

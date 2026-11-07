@@ -104,7 +104,8 @@ export const userFields: INodeProperties[] = [
 
     // Set a user status
     {
-        displayName: 'Status',
+        displayName: 'Status Name or ID',
+        description: 'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>',
         name: 'status',
         type: 'options',
         placeholder: "Select a user's availability status",

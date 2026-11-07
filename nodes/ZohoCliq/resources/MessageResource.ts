@@ -33,25 +33,114 @@ export const messageOperations: INodeProperties[] = [
                 description: 'Send message to a chat',
             },
             {
-                name: 'Direct Message',
-                value: 'DM',
-                action: 'Post message to user chat',
-                description: 'Send message to a user chat',
-            },
-            {
-                name: 'Pin Message',
+                name: 'Pin',
                 value: 'pinMessage',
                 action: 'Pin message',
                 description: 'Pin a message in a channel',
+            },
+            {
+                name: 'User Chat',
+                value: 'DM',
+                action: 'Post message to user chat',
+                description: 'Send message to a user chat',
             }
         ],
         default: 'Channel',
     },
 ]
 
+const CARD_THEMES = ['basic', 'modern-inline', 'poll', 'prompt'];
+
+// Optional fields shared by every operation that sends a message (also used by Thread → Create)
+export const messageAdditionalFields: INodeProperties[] = [
+    {
+        displayName: 'Bot Icon URL',
+        name: 'botIconURL',
+        type: 'string',
+        default: '',
+        placeholder: 'Enter bot icon image URL',
+    },
+    {
+        displayName: 'Bot Name',
+        name: 'botName',
+        type: 'string',
+        default: '',
+        placeholder: 'Enter bot name',
+    },
+    {
+        displayName: 'Card Icon URL',
+        name: 'cardIconURL',
+        type: 'string',
+        displayOptions: {
+            show: {
+                cardTheme: CARD_THEMES,
+            },
+        },
+        default: '',
+        placeholder: 'Enter icon image URL',
+    },
+    {
+        displayName: 'Card Theme',
+        name: 'cardTheme',
+        type: 'options',
+        options: [
+            {
+                name: 'Basic',
+                value: 'basic',
+            },
+            {
+                name: 'Modern Inline',
+                value: 'modern-inline',
+            },
+            {
+                name: 'Poll',
+                value: 'poll',
+            },
+            {
+                name: 'Prompt',
+                value: 'prompt',
+            }
+        ],
+        default: 'basic',
+        description: 'Send the message as a card with this theme. If not set, a plain text message is sent.',
+    },
+    {
+        displayName: 'Card Thumbnail URL',
+        name: 'cardThumbnailURL',
+        type: 'string',
+        displayOptions: {
+            show: {
+                cardTheme: CARD_THEMES,
+            },
+        },
+        default: '',
+        placeholder: 'Enter thumbnail image URL',
+    },
+    {
+        displayName: 'Card Title',
+        name: 'cardTitle',
+        type: 'string',
+        displayOptions: {
+            show: {
+                cardTheme: CARD_THEMES,
+            },
+        },
+        default: '',
+        placeholder: 'Enter card title',
+    },
+    {
+        displayName: 'Sync Message',
+        name: 'sync',
+        type: 'boolean',
+        default: false,
+        description: 'Whether to return the message ID in the response',
+    },
+]
+
 export const messageFields: INodeProperties[] = [
     {
-        displayName: 'Channel',
+        displayName: 'Channel Name or ID',
+        description: 'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>',
         name: 'channel',
         type: 'options',
         required: true,
@@ -60,7 +149,7 @@ export const messageFields: INodeProperties[] = [
         displayOptions: {
             show: {
                 resource: ['Message'],
-                operation: ['Channel', 'ChannelAsBot', "addUsersToChannel", 'removeChannelMember', 'archiveChannel', 'deleteChannel', 'fetchChannel', 'unarchiveChannel', 'updateChannel'],
+                operation: ['Channel', 'ChannelAsBot'],
             },
         },
         options: [], // Placeholder for dynamically fetched channels
@@ -78,7 +167,7 @@ export const messageFields: INodeProperties[] = [
         displayOptions: {
             show: {
                 resource: ['Message'],
-                operation: ['Channel', "ChannelAsBot", 'addUsersToChannel', 'removeChannelMember', 'archiveChannel', 'deleteChannel', 'fetchChannel', 'unarchiveChannel', 'updateChannel'],
+                operation: ['Channel', 'ChannelAsBot'],
                 channel: ["Custom_Channel_Selected"]
             },
         },
@@ -100,7 +189,8 @@ export const messageFields: INodeProperties[] = [
         description: 'Send a message in a channel as a bot. The bot must already be a participant in the channel. You can find the bot’s unique name in the bot’s API endpoint URL.',
     },
     {
-        displayName: "User",
+        displayName: 'User Name or ID',
+        description: 'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>',
         name: 'user',
         type: 'options',
         noDataExpression: true,
@@ -134,7 +224,8 @@ export const messageFields: INodeProperties[] = [
         default: '',
     },
     {
-        displayName: "Chat",
+        displayName: 'Chat Name or ID',
+        description: 'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>',
         name: 'chat',
         type: 'options',
         required: true,
@@ -157,7 +248,7 @@ export const messageFields: INodeProperties[] = [
         name: 'customChatId',
         required: true,
         type: 'string',
-        placeholder: "Enter the message ID",
+        placeholder: "Enter the chat ID",
         displayOptions: {
             show: {
                 resource: ['Message'],
@@ -167,8 +258,6 @@ export const messageFields: INodeProperties[] = [
         },
         default: '',
     },
-
-    //Create Thread
     {
         displayName: 'Message ID',
         name: 'messageId',
@@ -177,24 +266,11 @@ export const messageFields: INodeProperties[] = [
         displayOptions: {
             show: {
                 resource: ['Message'],
-                operation: ['Thread', 'pinMessage'],
+                operation: ['pinMessage'],
             },
         },
         default: '',
         placeholder: 'Enter the message ID',
-    },
-    {
-        displayName: "Thread Title",
-        name: 'threadTitle',
-        type: 'string',
-        displayOptions: {
-            show: {
-                resource: ['Message'],
-                operation: ['Thread'],
-            },
-        },
-        default: '',
-        placeholder: 'Enter the thread title',
     },
     {
         displayName: 'Text',
@@ -204,183 +280,28 @@ export const messageFields: INodeProperties[] = [
         displayOptions: {
             show: {
                 resource: ['Message'],
-                operation: ['Channel', 'ChannelAsBot', 'Bot', 'Chat', 'DM', 'Thread'],
+                operation: ['Channel', 'ChannelAsBot', 'Chat', 'DM'],
             },
         },
         default: '',
         placeholder: 'Write your message here',
     },
     {
-        displayName: 'Card Theme',
-        name: 'cardTheme',
-        type: 'options',
-        placeholder: "Select card theme",
+        displayName: 'Additional Fields',
+        name: 'additionalFields',
+        type: 'collection',
+        placeholder: 'Add Field',
         displayOptions: {
             show: {
                 resource: ['Message'],
-                operation: ['Channel', 'ChannelAsBot', 'Bot', 'Chat', 'DM', 'Thread'],
+                operation: ['Channel', 'ChannelAsBot', 'Chat', 'DM'],
             },
         },
-        options: [
-            {
-                name: 'None',
-                value: 'none',
-            },
-            {
-                name: 'Basic',
-                value: 'basic',
-            },
-            {
-                name: 'Poll',
-                value: 'poll',
-            },
-            {
-                name: 'Modern Inline',
-                value: 'modern-inline',
-            },
-            {
-                name: 'Prompt',
-                value: 'prompt',
-            }
-        ],
-        default: 'none',
-        description: 'Customize your message with a theme. If not specified, a plain text message will be sent.',
-    },
-    {
-        displayName: 'Card Title',
-        name: 'cardTitle',
-        type: 'string',
-        displayOptions: {
-            show: {
-                resource: ['Message'],
-                operation: ['Channel', 'Chat', 'ChannelAsBot', 'Bot', 'DM', 'Thread'],
-                cardTheme: ['basic', 'poll', 'modern-inline', 'prompt'],
-            },
-        },
-        default: '',
-        placeholder: 'Enter card title',
-    },
-    {
-        displayName: 'Card Thumbnail URL',
-        name: 'cardThumbnailURL',
-        type: 'string',
-        displayOptions: {
-            show: {
-                resource: ['Message'],
-                operation: ['Channel', 'Chat', 'ChannelAsBot', 'Bot', 'DM', 'Thread'],
-                cardTheme: ['basic', 'poll', 'modern-inline', 'prompt'],
-            },
-        },
-        placeholder: "Enter thumbnail image URL",
-        default: '',
-    },
-    {
-        displayName: 'Card Icon URL',
-        name: 'cardIconURL',
-        type: 'string',
-        displayOptions: {
-            show: {
-                resource: ['Message'],
-                operation: ['Channel', 'Chat', 'ChannelAsBot', 'Bot', 'DM', 'Thread'],
-                cardTheme: ['basic', 'poll', 'modern-inline', 'prompt'],
-            },
-        },
-        placeholder: "Enter icon image URL",
-        default: '',
-    },
-    {
-        displayName: 'Bot Name',
-        name: 'botName',
-        type: 'string',
-        displayOptions: {
-            show: {
-                resource: ['Message'],
-                operation: ['Channel', 'Chat', 'ChannelAsBot', 'Bot', 'DM', 'Thread'],
-            },
-        },
-        default: '',
-        placeholder: 'Enter bot name',
-    },
-    {
-        displayName: 'Bot Icon URL',
-        name: 'botIconURL',
-        type: 'string',
-        placeholder: "Enter bot icon image URL",
-        displayOptions: {
-            show: {
-                resource: ['Message'],
-                operation: ['Channel', 'Chat', 'DM', 'ChannelAsBot', 'Bot', 'Thread'],
-            },
-        },
-        default: '',
-    },
-    {
-        displayName: 'Post in Parent Channel',
-        name: 'postInChannel',
-        type: 'boolean',
-        displayOptions: {
-            show: {
-                resource: ['Message'],
-                operation: ['Thread'],
-            },
-        },
-        default: false,
-        description: 'If enabled, the parent channel will be notified about this thread creation',
-    },
-    {
-        displayName: 'Sync Message',
-        name: 'sync',
-        type: 'boolean',
-        displayOptions: {
-            show: {
-                resource: ['Message'],
-                operation: ['Channel', 'Chat', 'ChannelAsBot', 'Bot', 'DM', 'Thread'],
-            },
-        },
-        default: false,
-        description: 'If enabled, the Message ID will be returned in the response',
+        default: {},
+        options: messageAdditionalFields,
     },
 
-    {
-        displayName: 'Thread Chat ID',
-        name: 'threadChatId',
-        type: 'string',
-        required: true,
-        displayOptions: {
-            show: {
-                resource: ['Message'],
-                operation: ['updateThreadState'],
-            },
-        },
-        default: '',
-        placeholder: 'Enter the thread chat ID',
-    },
-    {
-        displayName: 'Thread Status',
-        name: 'state',
-        type: 'options',
-        required: true,
-        placeholder: "Select the thread action",
-        displayOptions: {
-            show: {
-                resource: ['Message'],
-                operation: ['updateThreadState'],
-            },
-        },
-        options: [
-            {
-                name: 'Close',
-                value: 'close',
-            },
-            {
-                name: 'Reopen',
-                value: 'reopen',
-            }
-        ],
-        default: 'close',
-    },
-
-    //Create Thread
+    // Pin message
     {
         displayName: 'Expiry Time',
         name: 'expiryTime',
@@ -395,12 +316,20 @@ export const messageFields: INodeProperties[] = [
         },
         options: [
             {
-                name: 'Forever',
-                value: "-1",
+                name: '1 Day',
+                value: 86400000,
             },
             {
                 name: '1 Hour',
                 value: 3600000,
+            },
+            {
+                name: '1 Week',
+                value: 604800000,
+            },
+            {
+                name: '12 Hours',
+                value: 43200000,
             },
             {
                 name: '2 Hours',
@@ -415,20 +344,12 @@ export const messageFields: INodeProperties[] = [
                 value: 28800000,
             },
             {
-                name: '12 Hours',
-                value: 43200000,
-            },
-            {
-                name: '1 Day',
-                value: 86400000,
-            },
-            {
-                name: '1 Week',
-                value: 604800000,
-            },
-            {
                 name: 'Custom',
                 value: 'custom',
+            },
+            {
+                name: 'Forever',
+                value: "-1",
             }
         ],
         default: "-1",

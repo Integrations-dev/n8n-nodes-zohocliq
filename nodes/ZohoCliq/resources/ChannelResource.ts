@@ -1,4 +1,4 @@
-import type { INodeProperties } from "n8n-workflow";
+import type { INodeProperties, INodePropertyOptions } from "n8n-workflow";
 
 export const channelOperations: INodeProperties[] = [
     {
@@ -27,25 +27,25 @@ export const channelOperations: INodeProperties[] = [
                 description: 'Add users to a channel',
             },
             {
-                name: 'Archive Channel',
+                name: 'Archive',
                 value: 'archiveChannel',
                 action: 'Archive channel',
                 description: 'Archive a channel',
             },
             {
-                name: 'Create Channel',
+                name: 'Create',
                 value: 'createChannel',
                 action: 'Create channel',
                 description: 'Create a new channel',
             },
             {
-                name: 'Delete Channel',
+                name: 'Delete',
                 value: 'deleteChannel',
                 action: 'Delete channel',
                 description: 'Delete a channel',
             },
             {
-                name: 'Fetch Channel',
+                name: 'Fetch',
                 value: 'fetchChannel',
                 action: 'Fetch channel',
                 description: 'Fetch details of a specific channel',
@@ -57,13 +57,13 @@ export const channelOperations: INodeProperties[] = [
                 description: 'Remove a member from a channel',
             },
             {
-                name: 'Unarchive Channel',
+                name: 'Unarchive',
                 value: 'unarchiveChannel',
                 action: 'Unarchive channel',
                 description: 'Unarchive a channel',
             },
             {
-                name: 'Update Channel',
+                name: 'Update',
                 value: 'updateChannel',
                 action: 'Update channel',
                 description: 'Update details of a specific channel',
@@ -73,9 +73,63 @@ export const channelOperations: INodeProperties[] = [
     },
 ]
 
+// Shared by Channel → Create (top level / Additional Fields) and Channel → Update (Update Fields)
+const channelTypeOptions: INodePropertyOptions[] = [
+    {
+        name: 'Organization',
+        value: 'organization',
+        description: 'Anyone in your organization can access and join this channel'
+    },
+    {
+        name: 'Team',
+        value: 'team',
+        description: 'Only selected members of your organization group can access and join this channel'
+    },
+    {
+        name: 'Personal',
+        value: 'private',
+        description: 'Only invited users from your organization can join this channel'
+    },
+    {
+        name: 'External',
+        value: 'external',
+        description: 'Invited users from any organization can join this channel'
+    }
+];
+
+const teamsField: INodeProperties = {
+    displayName: 'Team Names or IDs',
+    description: 'Choose from the list, or specify IDs using an <a href="https://docs.n8n.io/code/expressions/">expression</a>',
+    name: 'teams',
+    type: 'multiOptions',
+    placeholder: "Select your teams",
+    options: [],
+    default: [],
+    typeOptions: {
+        loadOptionsMethod: 'getTeamsWithoutCustom',
+    },
+};
+
+const channelDescriptionField: INodeProperties = {
+    displayName: 'Channel Description',
+    name: 'channelDescription',
+    type: 'string',
+    default: '',
+    placeholder: 'Enter a description for the channel',
+};
+
+const visibilityField: INodeProperties = {
+    displayName: 'Visibility',
+    name: 'visibility',
+    type: 'boolean',
+    default: false,
+    description: 'Whether the channel is visible to everyone in the organization or team',
+};
+
 export const channelFields: INodeProperties[] = [
     {
-        displayName: 'Channel',
+        displayName: 'Channel Name or ID',
+        description: 'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>',
         name: 'channel',
         type: 'options',
         required: true,
@@ -94,7 +148,8 @@ export const channelFields: INodeProperties[] = [
         },
     },
     {
-        displayName: 'Channel',
+        displayName: 'Channel Name or ID',
+        description: 'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>',
         name: 'channel',
         type: 'options',
         required: true,
@@ -166,24 +221,11 @@ export const channelFields: INodeProperties[] = [
         displayOptions: {
             show: {
                 resource: ['Channel'],
-                operation: ['createChannel', 'updateChannel'],
+                operation: ['createChannel'],
             },
         },
         default: '',
         placeholder: 'Enter the channel name',
-    },
-    {
-        displayName: 'Channel Description',
-        name: 'channelDescription',
-        type: 'string',
-        displayOptions: {
-            show: {
-                resource: ['Channel'],
-                operation: ['createChannel', 'updateChannel'],
-            },
-        },
-        default: '',
-        placeholder: 'Enter a description for the channel',
     },
     {
         displayName: 'Channel Type',
@@ -194,78 +236,105 @@ export const channelFields: INodeProperties[] = [
         displayOptions: {
             show: {
                 resource: ['Channel'],
-                operation: ['createChannel', 'updateChannel'],
+                operation: ['createChannel'],
             },
         },
-        options: [
-            {
-                name: 'Organization',
-                value: 'organization',
-                description: 'Anyone in your organization can access and join this channel'
-            },
-            {
-                name: 'Team',
-                value: 'team',
-                description: 'Only selected members of your organization group can access and join this channel'
-            },
-            {
-                name: 'Personal',
-                value: 'private',
-                description: 'Only invited users from your organization can join this channel'
-            },
-            {
-                name: 'External',
-                value: 'external',
-                description: 'Invited users from any organization can join this channel'
-            }
-        ],
+        options: channelTypeOptions,
         default: 'private',
     },
     {
-        displayName: 'Select Your Teams',
-        name: 'teams',
-        type: 'multiOptions',
-        placeholder: "Select your teams",
+        ...teamsField,
         required: true,
         displayOptions: {
             show: {
                 resource: ['Channel'],
-                operation: ['createChannel', 'updateChannel'],
+                operation: ['createChannel'],
                 level: ['team'],
             },
         },
-        options: [],
-        default: [],
-        typeOptions: {
-            loadOptionsMethod: 'getTeamsWithoutCustom',
-        },
     },
     {
-        displayName: 'Email Address',
-        name: 'channelEmailIDs',
-        placeholder: "Enter the email address of the user",
-        type: 'string',
+        displayName: 'Additional Fields',
+        name: 'additionalFields',
+        type: 'collection',
+        placeholder: 'Add Field',
         displayOptions: {
             show: {
                 resource: ['Channel'],
                 operation: ['createChannel'],
-                level: ['private', 'external', 'organization'],
             },
         },
-        default: '',
-        description: 'Enter the email addresses of users to be added to the channel. Separate multiple email addresses with commas.',
+        default: {},
+        options: [
+            channelDescriptionField,
+            {
+                displayName: 'Email Address',
+                name: 'channelEmailIDs',
+                placeholder: "Enter the email address of the user",
+                type: 'string',
+                displayOptions: {
+                    show: {
+                        '/level': ['private', 'external', 'organization'],
+                    },
+                },
+                default: '',
+                description: 'Enter the email addresses of users to be added to the channel. Separate multiple email addresses with commas.',
+            },
+            {
+                ...visibilityField,
+                displayOptions: {
+                    show: {
+                        '/level': ['organization', 'team'],
+                    },
+                },
+            },
+        ],
     },
     {
-        displayName: 'Visibility',
-        name: 'visibility',
-        type: 'boolean',
+        displayName: 'Update Fields',
+        name: 'updateFields',
+        type: 'collection',
+        placeholder: 'Add Field',
         displayOptions: {
             show: {
-                level: ['organization', 'team'], // This ensures the field is shown only when "level" is "organization" or "team"
+                resource: ['Channel'],
+                operation: ['updateChannel'],
             },
         },
-        default: false,
-        description: 'Set whether the channel is visible to everyone in the organization/ Team',
+        default: {},
+        options: [
+            channelDescriptionField,
+            {
+                displayName: 'Channel Name',
+                name: 'channelName',
+                type: 'string',
+                default: '',
+                placeholder: 'Enter the channel name',
+            },
+            {
+                displayName: 'Channel Type',
+                name: 'level',
+                type: 'options',
+                options: channelTypeOptions,
+                default: 'private',
+            },
+            {
+                ...teamsField,
+                displayOptions: {
+                    show: {
+                        level: ['team'],
+                    },
+                },
+            },
+            {
+                ...visibilityField,
+                displayOptions: {
+                    show: {
+                        level: ['organization', 'team'],
+                    },
+                },
+            },
+        ],
     },
 
     {
